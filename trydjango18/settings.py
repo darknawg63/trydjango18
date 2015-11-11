@@ -12,40 +12,46 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import configparser
 from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Handling Key Import Errors
-def get_env_variable(var_name):
-    """ Get the environment variable or return exception """
-    try:
-        return os.environ[var_name]
-    except KeyError:
-        error_msg = "Set the %s environment variable" % var_name
-        raise ImproperlyConfigured(error_msg)
+def get_ini_setting(file, section):
+    """
+    Gets and returns a settings from an .ini file where "section" is [CONFIG].
 
-# Get ENV VARIABLES key
-ENV_ROLE = get_env_variable('ENV_ROLE')
+    Example:
+
+    hostname = get_ini_setting("myconfig.ini", "HOST")
+    """
+    try:
+        parser = configparser.ConfigParser()
+        parser.read(file)
+        settings = dict(parser.items(section))
+        return settings
+
+    except(KeyError, NameError, configparser.NoSectionError):
+        error = "The section %s not found" % section
+        raise ImproperlyConfigured(error)
+
+# Get configuration items from the configurations file
+CONFIG = get_ini_setting('config.ini', 'config')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_env_variable('TRYDJANGO_SECRET_KEY')
+SECRET_KEY = CONFIG['secret_key']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-TRYDJANGO_DB_PASS = False
-if ENV_ROLE == 'development':
-    DEBUG = True
-    TRYDJANGO_DB_PASS = get_env_variable('TRYDJANGO_DB_PASS')
+DEBUG = True
 
 ALLOWED_HOSTS = []
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'pethelius@gmail.com'
-EMAIL_HOST_PASSWORD = 'Hellojrad1'
+EMAIL_HOST_USER = CONFIG['email_user']
+EMAIL_HOST_PASSWORD = CONFIG['email_password']
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

@@ -1,6 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header_title %}Welcome | {{ block.super }}{% endblock %}
+
+{% block jumbotron %}
+
+{{ block.super }}
+
+{% endblock %}
+
+
+{% block content %}
 <h1>{{ title }}</h1>
 
 <form action="" method="post">
+
     {{ form.as_p }}
     <input type="submit" value="Sign Up">{% csrf_token %}
+
 </form>
+
+{% endblock %}
