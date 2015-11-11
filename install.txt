@@ -3,6 +3,7 @@ blessings==1.6
 bpython==0.14.2
 curtsies==0.1.19
 Django==1.8.5
+django-crispy-forms==1.5.2
 greenlet==0.4.9
 pep8==1.6.2
 Pygments==2.0.2
