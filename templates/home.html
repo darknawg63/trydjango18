@@ -46,22 +46,24 @@
 {% block content %}
 
 {% if request.user.is_authenticated %}
+
   <h1>You are logged in.</h1>
 
-  {{ query_set }}
+    {% if query_set %}
+
+    <h1>Welcome Staff Member</h1>
+    {% for instance in query_set %}
+  
+    {{ instance }} <br />
+
+    {% endfor %}
+
+    {% endif %}
+
+
 {% else %}
 
 <div class="row">
-  <div class="col-xs-3 pull-right">
-    <p class="lead text-align-center">{{ title }}</p>
-
-    <form action="" method="post">
-  
-    {{ form|crispy }}
-    <input class="btn btn-primary" type="submit" value="Sign Up">{% csrf_token %}
-
-    </form>
-  </div>
   <div class="col-sm-3">
     <p class="lead text-align-center">Django &amp; Bootstrap
       <br />
@@ -79,6 +81,16 @@
       <br />
       <i class="fa fa-github fa-5x"></i>
     </p>
+  </div>
+  <div class="col-sm-3">
+    <p class="lead text-align-center">{{ title }}</p>
+
+    <form action="" method="post">
+  
+    {{ form|crispy }}
+    <input class="btn btn-primary" type="submit" value="Sign Up">{% csrf_token %}
+
+    </form>
   </div>
 </div>
 {% endif %}

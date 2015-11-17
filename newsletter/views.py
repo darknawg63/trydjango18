@@ -2,6 +2,8 @@ from django.conf import settings
 from django.shortcuts import render
 from django.core.mail import send_mail
 from .forms import ContactForm, SignUpForm
+from .models import SignUp
+
 
 # Create your views here.
 def home(request):
@@ -27,8 +29,9 @@ def home(request):
         }
 
     if request.user.is_authenticated() and request.user.is_staff:
+        query_set = SignUp.objects.all()
         context = {
-            "query_set": [123, 456]
+            "query_set": query_set
         }
 
     return render(request, "home.html", context)
@@ -47,7 +50,7 @@ def contact(request):
         from_email = settings.EMAIL_HOST_USER
         to_email = [from_email]
         contact_message="%s: %s via %s"%(form_full_name, form_message, form_email)
-        #print(email, message, full_name)
+        print(email, message, full_name)
         send_mail(subject, contact_message, from_email, to_email, fail_silently=False)
 
     context = {
