@@ -19,6 +19,7 @@
 
 {% block jumbotron %}
 
+{% if not request.user.is_authenticated %}
 <div class="jumbotron">
   <div class="container">
     <div class="row">
@@ -37,10 +38,18 @@
     </div>
   </div>
 </div>
+
+{% endif %}
 {% endblock %}
 
 
 {% block content %}
+
+{% if request.user.is_authenticated %}
+  <h1>You are logged in.</h1>
+
+  {{ query_set }}
+{% else %}
 
 <div class="row">
   <div class="col-xs-3 pull-right">
@@ -54,12 +63,14 @@
     </form>
   </div>
   <div class="col-sm-3">
-    <p class="lead text-align-center">Built with Django &amp; Bootstrap
+    <p class="lead text-align-center">Django &amp; Bootstrap
+      <br />
       <i class="fa fa-truck fa-5x"></i>
     </p>
   </div>
   <div class="col-sm-3">
-    <p class="lead text-align-center">Created for Starters of all kinds
+    <p class="lead text-align-center">Created for Starters
+      <br />
       <i class="fa fa-bolt fa-5x"></i>
     </p>
   </div>
@@ -70,5 +81,6 @@
     </p>
   </div>
 </div>
+{% endif %}
 
 {% endblock %}

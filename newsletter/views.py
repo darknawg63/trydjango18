@@ -5,7 +5,7 @@ from .forms import ContactForm, SignUpForm
 
 # Create your views here.
 def home(request):
-    title = "Welcome"
+    title = "Sign Up Now"
     form = SignUpForm(request.POST or None)
     context = {
         "title": title,
@@ -20,10 +20,15 @@ def home(request):
 
         if not full_name:
             full_name = "New full name"
-            instance.full_name = full_name
+        instance.full_name = full_name
         instance.save()
         context = {
             "title": "Thank you"
+        }
+
+    if request.user.is_authenticated() and request.user.is_staff:
+        context = {
+            "query_set": [123, 456]
         }
 
     return render(request, "home.html", context)
