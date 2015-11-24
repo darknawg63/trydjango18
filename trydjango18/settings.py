@@ -47,7 +47,7 @@ ADMINS = (("admin", "pathelius@gmail.com"),)
 ALLOWED_HOSTS = ['*']
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
 EMAIL_HOST = 'smtp.sendgrid.net'
-SENDGRID_API_KEY = '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'
+SENDGRID_API_KEY = get_env_variable('SENDGRID_API_KEY')
 
 # Application definition
 
