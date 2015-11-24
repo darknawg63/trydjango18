@@ -135,7 +135,7 @@ STATIC_ROOT = 'staticfiles'
 #"/var/www/example.com/static/"
 
 STATICFILES_DIRS = (
-        os.path.join(os.path.dirname(BASE_DIR), "static"),
+        os.path.join(BASE_DIR, "static"),
     #'/var/www/static/',
 )
 
