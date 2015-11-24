@@ -106,7 +106,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'trydjango18',
         'USER': 'trydjango18',
-        'PASSWORD': TJ_DB_PASS,
+        'PASSWORD': get_env_variable('TJ_DB_PASS'),
         'HOST': '/tmp',
         'PORT': '5432',
     }
